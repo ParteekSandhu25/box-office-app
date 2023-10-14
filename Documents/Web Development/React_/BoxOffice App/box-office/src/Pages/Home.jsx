@@ -1,33 +1,22 @@
 import React, { useState } from 'react';
 import { searchForShows, searchForPeople } from '../api/tvmaze';
+import SearchForm from '../Components/SearchForm';
 
 function Home() {
-  const [searchStr, setsearchStr] = useState('');
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);
-  const [searchOption, setSearchOption] = useState('shows');
 
-  const onRadioChange = ev => {
-    setSearchOption(ev.target.value);
-  };
-
-  const searchStrHandler = event => {
-    setsearchStr(event.target.value);
-  };
-
-  const onSearch = async event => {
-    event.preventDefault();
-
+  const onSearch = async ({ q, searchOption }) => {
     try {
       setApiDataError(null);
 
+      let result;
       if (searchOption === 'shows') {
-        const result = await searchForShows(searchStr);
-        setApiData(result);
+        result = await searchForShows(q);
       } else {
-        const result = await searchForPeople(searchStr);
-        setApiData(result);
+        result = await searchForPeople(q);
       }
+      setApiData(result);
     } catch (error) {
       setApiDataError(error);
     }
@@ -51,33 +40,7 @@ function Home() {
 
   return (
     <div>
-      <form onSubmit={onSearch}>
-        <input type="text" onChange={searchStrHandler} value={searchStr} />
-
-        <br></br>
-        <label>
-          <input
-            type="radio"
-            name="search-option"
-            value="shows"
-            checked={searchOption === 'shows'}
-            onChange={onRadioChange}
-          />
-          Shows
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="search-option"
-            value="actor"
-            checked={searchOption === 'actor'}
-            onChange={onRadioChange}
-          />
-          Actor
-        </label>
-        <br></br>
-        <button type="submit">Search</button>
-      </form>
+      <SearchForm onSearch={onSearch} />
 
       <div>{renderApiData()}</div>
     </div>
