@@ -7,4 +7,5 @@ const getApi = async queryString => {
   return body;
 };
 
-export const showSearch = query => getApi(`/search/shows?q=${query}`);
+export const searchForShows = query => getApi(`/search/shows?q=${query}`);
+export const searchForPeople = query => getApi(`/search/people?q=${query}`);
