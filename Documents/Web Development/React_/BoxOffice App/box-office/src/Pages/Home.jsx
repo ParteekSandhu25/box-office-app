@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { showSearch } from "../api/tvmaze";
+import React, { useState } from 'react';
+import { showSearch } from '../api/tvmaze';
 
 function Home() {
-  const [searchStr, setsearchStr] = useState("");
+  const [searchStr, setsearchStr] = useState('');
   const [apiData, setApiData] = useState(null);
   const [apiDataError, setApiDataError] = useState(null);
 
-  const searchStrHandler = (event) => {
+  const searchStrHandler = event => {
     setsearchStr(event.target.value);
   };
 
-  const onSearch = async (event) => {
+  const onSearch = async event => {
     event.preventDefault();
 
     try {
@@ -28,7 +28,7 @@ function Home() {
     }
 
     if (apiData) {
-      return apiData.map((data) => (
+      return apiData.map(data => (
         <div key={data.show.id}>{data.show.name}</div>
       ));
     }
