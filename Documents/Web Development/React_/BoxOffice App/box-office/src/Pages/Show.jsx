@@ -2,8 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getShowById } from '../api/tvmaze';
 
-function Show() {
-  const { showId } = useParams();
+const useShowById = showId => {
   const [showData, setShowData] = useState(null);
   const [showError, setShowError] = useState(null);
 
@@ -19,6 +18,13 @@ function Show() {
 
     fetchData();
   }, [showId]);
+
+  return { showData, showError };
+};
+
+function Show() {
+  const { showId } = useParams();
+  const { showData, showError } = useShowById(showId);
 
   if (showData) {
     return <p>Got show data: {showData.name}</p>;
