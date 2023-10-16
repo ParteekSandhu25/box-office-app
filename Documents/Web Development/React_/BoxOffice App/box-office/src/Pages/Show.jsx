@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getShowById } from '../api/tvmaze';
 import { useQuery } from '@tanstack/react-query';
 import ShowMainData from '../Components/shows/ShowMainData';
@@ -29,6 +29,7 @@ import Cast from '../Components/shows/Cast';
 
 function Show() {
   const { showId } = useParams();
+  const navigate = useNavigate();
   // CUSTOM HOOK
   // const { showData, showError } = useShowById(showId);
 
@@ -41,6 +42,8 @@ function Show() {
   if (showData) {
     return (
       <div>
+        <Link to={'/'}>GO back to Home</Link>
+
         <ShowMainData
           image={showData.image}
           rating={showData.rating}
